@@ -10,6 +10,8 @@ Una empresa ha recopilado datos sobre sus clientes y las compras que han realiza
 
 **Enlace a los datos:** https://www.kaggle.com/datasets/imakash3011/customer-personality-analysis
 
+Ver notebook https://datalore.jetbrains.com/notebook/PcoOuAJfMaX1ioSfxqgrLM/qZUQfJoPUjRbwWtMa7reoe
+
 
 Attributes
 
