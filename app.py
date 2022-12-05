@@ -1,6 +1,7 @@
 
 import dash
 from dash import html, dcc
+from dash.dependencies import Input, Output, State
 
 import plotly.graph_objects as go
 import plotly.express as px
@@ -33,11 +34,11 @@ def build_tabs():
                 id='app-tabs',
                 children=[
                     dcc.Tab(
-                        id='eda-tab',
+                        id='tab-1',
                         label='EDA'
                     ),
                     dcc.Tab(
-                        id='clustering-tab',
+                        id='tab-2',
                         label='Customer Segments'
                     )
                 ]
@@ -46,14 +47,44 @@ def build_tabs():
     )
 
 
+def build_tab_1():
+    return html.Div(
+        id='tab-1',
+        children=[
+            html.P("Tab 1")
+        ]
+    )
+
+def build_tab_2():
+    return html.Div(
+        id='tab-2',
+        children=[
+            html.P("Tab 2")
+        ]
+    )
+
+
 app.layout = html.Div(
     id='big-app-container',
     children=[
         build_banner(),
-        build_tabs()
+        build_tabs(),
+        html.Div(id='app-content')
     ],
 )
 
+@app.callback(
+    Output('app-content', 'children'),
+    Input('app-tabs', 'value')
+)
+def update_tabs(tab):
+    if tab == 'tab-1':
+        return build_tab_1()
+    elif tab == 'tab-2':
+        return build_tab_2()
+    else:
+        raise ValueError(tab)
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8736)
+
