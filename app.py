@@ -12,6 +12,7 @@ import plotly.express as px
 import pandas as pd
 
 from maindash import app
+from tab1 import build_tab_1
 
 
 load_figure_template('yeti')
@@ -84,13 +85,7 @@ def build_tabs():
     )
 
 
-def build_tab_1():
-    return html.Div(
-        id='tab-1',
-        children=[
-            html.P("Tab 1")
-        ]
-    )
+
 
 
 def build_tab_2():
