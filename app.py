@@ -3,6 +3,7 @@ import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
+
 from dash_bootstrap_templates import load_figure_template
 
 import plotly.graph_objects as go
@@ -10,15 +11,10 @@ import plotly.express as px
 
 import pandas as pd
 
+from maindash import app
+
 
 load_figure_template('yeti')
-
-app = dash.Dash(
-    __name__,
-    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
-    external_stylesheets=[dbc.themes.YETI]
-)
-app.title = 'Client Segmentation Dashboard'
 
 
 
@@ -57,7 +53,8 @@ def build_banner():
         children=[
             html.H4('Cient Segmentation Project'),
             html.H5('Dash Project')
-        ]
+        ],
+        className='p-4'
     )
 
 
@@ -75,7 +72,11 @@ def build_tabs():
                     ),
                     dcc.Tab(
                         id='tab-2',
-                        label='Customer Segments'
+                        label='Clustering'
+                    ),
+                    dcc.Tab(
+                        id='tab-3',
+                        label='Explore segments'
                     )
                 ]
             )
@@ -115,7 +116,27 @@ def build_tab_2():
     )
 
 
+def build_tab_3():
+    return dbc.Row(
+        [
+            dbc.Col(
+                [
+                    html.H4('Selection'),
+                    html.P('Here, you may select the cluster that you want to explore:'),
+                    html.Hr(),
+                    dcc.Dropdown(['Bad', 'Good', 'Excellent', 'Elite'], 'Elite')
+                ],
+                width=4,
+                className='p-5'
+            ),
+            dbc.Col(
+                [
 
+                ],
+                width=8
+            )
+        ]
+    )
 
 
 
@@ -140,10 +161,10 @@ def update_tabs(tab):
         return build_tab_1()
     elif tab == 'tab-2':
         return build_tab_2()
+    elif tab == 'tab-3':
+        return build_tab_3()
     else:
         raise ValueError(tab)
-
-
 
 
 if __name__ == '__main__':
