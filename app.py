@@ -98,5 +98,5 @@ create_callbacks_for_tab3()
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8736)
+    app.run_server(debug=True, port=8737)
 

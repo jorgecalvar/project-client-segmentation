@@ -15,9 +15,9 @@ from maindash import app
 
 def build_tab_1():
     return html.Div(
-        id='tab-1',
+        id='tab-1-content',
         children=[
-            html.P("Tab 1")
+            html.P("Tabasdf 1")
         ]
     )
 

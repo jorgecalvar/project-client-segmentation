@@ -100,7 +100,7 @@ def build_purchase_row():
                     ),
                     dbc.Col(
                         [
-                            dcc.Graph(figure=generate_check_boxplot(0))
+                            dcc.Graph(id='check-graph')
                         ],
                         width=6
                     )
@@ -119,13 +119,13 @@ def build_categoricalinfo_row():
                 [
                     dbc.Col(
                         [
-                            dcc.Graph(figure=generate_relationship_pie(0))
+                            dcc.Graph(id='relationship-graph')
                         ],
                         width=6
                     ),
                     dbc.Col(
                         [
-                            dcc.Graph(figure=generate_education_pie(0))
+                            dcc.Graph(id='education-graph')
                         ],
                         width=6
                     )
@@ -144,13 +144,13 @@ def build_profile_row():
                 [
                     dbc.Col(
                         [
-                            dcc.Graph(figure=generate_income_boxplot(0))
+                            dcc.Graph(id='income-graph')
                         ],
                         width=6
                     ),
                     dbc.Col(
                         [
-                            dcc.Graph(figure=generate_age_boxplot(0))
+                            dcc.Graph(id='age-graph')
                         ],
                         width=6
                     )
@@ -201,8 +201,47 @@ def create_callbacks_for_tab3():
         Input('cluster-select', 'value')
     )
     def update_numpurchases_graph(cluster):
-        print('executin grpah update')
         return generate_numpurchases_boxplot(CLUSTER_MAPPINGS[cluster])
+
+
+    @app.callback(
+        Output('check-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_check_graph(cluster):
+        return generate_check_boxplot(CLUSTER_MAPPINGS[cluster])
+
+
+    @app.callback(
+        Output('relationship-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_relationship_graph(cluster):
+        return generate_relationship_pie(CLUSTER_MAPPINGS[cluster])
+
+    @app.callback(
+        Output('education-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_education_graph(cluster):
+        return generate_education_pie(CLUSTER_MAPPINGS[cluster])
+
+    @app.callback(
+        Output('income-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_income_graph(cluster):
+        return generate_income_boxplot(CLUSTER_MAPPINGS[cluster])
+
+    @app.callback(
+        Output('age-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_age_graph(cluster):
+        return generate_age_boxplot(CLUSTER_MAPPINGS[cluster])
+        
+
+
 
 
 
