@@ -24,10 +24,10 @@ def build_banner():
     return html.Div(
         id='banner',
         children=[
-            html.H4('Cient Segmentation Project'),
-            html.H5('Dash Project')
+            html.H2(html.B('Customer Segmentation Dashboard')),
+            html.H4('Fernando Santana & Jorge Calvar')
         ],
-        className='p-4'
+        className='p-4 bg-primary text-white'
     )
 
 
@@ -67,10 +67,11 @@ app.layout = dbc.Container(
                      build_tab_1(),
                      build_tab_2(),
                      build_tab_3()
-                 ]),
+                 ],
+                 className='bg-secondary'),
         html.Div(id='no-function', style={'display': 'none'})
     ],
-    className='dbc',
+    className='dbc bg-primary',
     fluid=True
 )
 

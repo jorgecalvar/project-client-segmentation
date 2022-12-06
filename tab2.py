@@ -55,7 +55,8 @@ def build_tab_2():
                     html.Hr(),
                     dcc.Graph(id='cluster_histogram', figure=generate_cluster_histogram())
                 ],
-                width=6
+                width=6,
+                className='p-5'
             ),
             dbc.Col(
                 [
@@ -63,7 +64,8 @@ def build_tab_2():
                     html.Hr(),
                     dcc.Graph(id='cluster_3dscatter', figure=generate_cluster_3dscatter())
                 ],
-                width=6
+                width=6,
+                className='p-5'
             )
         ]
     )
