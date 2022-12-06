@@ -1,4 +1,3 @@
-
 import dash
 from dash import html, dcc
 from dash.dependencies import Input, Output, State
@@ -12,11 +11,10 @@ import plotly.express as px
 import pandas as pd
 
 from maindash import app
-from tab1 import build_tab_1
+from tab1 import build_tab_1, create_callbacks_for_tab1
 from tab2 import build_tab_2
 from tab3 import build_tab_3, create_callbacks_for_tab3
 from tab4 import build_tab_4
-
 
 load_figure_template('yeti')
 
@@ -62,7 +60,6 @@ def build_tabs():
     )
 
 
-
 app.layout = dbc.Container(
     [
         build_banner(),
@@ -99,13 +96,8 @@ def update_tabs(tab):
         raise ValueError(tab)
 
 
+create_callbacks_for_tab1()
 create_callbacks_for_tab3()
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8737)
-
