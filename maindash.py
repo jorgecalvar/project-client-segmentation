@@ -10,6 +10,12 @@ app = dash.Dash(
 )
 app.title = 'Client Segmentation Dashboard'
 
+CLUSTER_MAPPINGS = {
+    'Elite': 1,
+    'Low Recent': 2,
+    'Low Old': 0,
+    'High Potential': 3
+}
 
 
 

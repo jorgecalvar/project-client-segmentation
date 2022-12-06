@@ -9,14 +9,9 @@ import plotly.express as px
 
 import pandas as pd
 
-from maindash import app
+from maindash import app, CLUSTER_MAPPINGS
 
-CLUSTER_MAPPINGS = {
-    'Elite': 1,
-    'High Potential': 2,
-    'Low Old': 0,
-    'Low Recent': 3
-}
+
 
 # DATA =======================
 

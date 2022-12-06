@@ -15,6 +15,7 @@ from maindash import app
 from tab1 import build_tab_1
 from tab2 import build_tab_2
 from tab3 import build_tab_3, create_callbacks_for_tab3
+from tab4 import build_tab_4
 
 
 load_figure_template('yeti')
@@ -50,6 +51,10 @@ def build_tabs():
                     dcc.Tab(
                         id='tab-3',
                         label='Explore segments'
+                    ),
+                    dcc.Tab(
+                        id='tab-4',
+                        label='Detailed insights'
                     )
                 ]
             )
@@ -66,7 +71,8 @@ app.layout = dbc.Container(
                  children=[
                      build_tab_1(),
                      build_tab_2(),
-                     build_tab_3()
+                     build_tab_3(),
+                     build_tab_4()
                  ],
                  className='bg-secondary'),
         html.Div(id='no-function', style={'display': 'none'})
@@ -87,6 +93,8 @@ def update_tabs(tab):
         return build_tab_2()
     elif tab == 'tab-3':
         return build_tab_3()
+    elif tab == 'tab-4':
+        return build_tab_4()
     else:
         raise ValueError(tab)
 
