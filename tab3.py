@@ -11,6 +11,13 @@ import pandas as pd
 
 from maindash import app
 
+CLUSTER_MAPPINGS = {
+    'Elite': 1,
+    'High Potential': 2,
+    'Low Old': 0,
+    'Low Recent': 3
+}
+
 # DATA =======================
 
 df_clustered = None
@@ -87,7 +94,7 @@ def build_purchase_row():
                 [
                     dbc.Col(
                         [
-                            dcc.Graph(figure=generate_numpurchases_boxplot(0))
+                            dcc.Graph(id='numpurchases-graph')
                         ],
                         width=6
                     ),
@@ -165,7 +172,11 @@ def build_tab_3():
                     html.H4('Selection'),
                     html.P('Here, you may select the cluster that you want to explore:'),
                     html.Hr(),
-                    dcc.Dropdown(['Bad', 'Good', 'Excellent', 'Elite'], 'Elite')
+                    dcc.Dropdown(
+                        id='cluster-select',
+                        options=list(CLUSTER_MAPPINGS.keys()),
+                        value='Elite'
+                    )
                 ],
                 width=4,
                 className='p-5'
@@ -180,3 +191,19 @@ def build_tab_3():
             )
         ]
     )
+
+
+# CALLBACKS ===================================
+
+def create_callbacks_for_tab3():
+    @app.callback(
+        Output('numpurchases-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_numpurchases_graph(cluster):
+        print('executin grpah update')
+        return generate_numpurchases_boxplot(CLUSTER_MAPPINGS[cluster])
+
+
+
+

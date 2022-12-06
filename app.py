@@ -14,7 +14,7 @@ import pandas as pd
 from maindash import app
 from tab1 import build_tab_1
 from tab2 import build_tab_2
-from tab3 import build_tab_3
+from tab3 import build_tab_3, create_callbacks_for_tab3
 
 
 load_figure_template('yeti')
@@ -58,18 +58,17 @@ def build_tabs():
 
 
 
-
-
-
-
-
-
-
 app.layout = dbc.Container(
     [
         build_banner(),
         build_tabs(),
-        html.Div(id='app-content')
+        html.Div(id='app-content',
+                 children=[
+                     build_tab_1(),
+                     build_tab_2(),
+                     build_tab_3()
+                 ]),
+        html.Div(id='no-function', style={'display': 'none'})
     ],
     className='dbc',
     fluid=True
@@ -89,6 +88,13 @@ def update_tabs(tab):
         return build_tab_3()
     else:
         raise ValueError(tab)
+
+
+create_callbacks_for_tab3()
+
+
+
+
 
 
 if __name__ == '__main__':
