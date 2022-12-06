@@ -24,26 +24,134 @@ def get_df_for_cluster_for_plots():
 # GRAPHS ===========
 
 def generate_numpurchases_boxplot(cluster):
-    pass
+    df = get_df_for_cluster_for_plots()
+    fig = px.box(
+        df.loc[df['cluster'] == cluster, :],
+        y='NumAllPurchases'
+    )
+    return fig
 
 
 def generate_check_boxplot(cluster):
-    pass
+    df = get_df_for_cluster_for_plots()
+    fig = px.box(
+        df.loc[df['cluster'] == cluster, :],
+        y='AverageCheck'
+    )
+    return fig
 
 
 def generate_relationship_pie(cluster):
-    pass
+    df = get_df_for_cluster_for_plots()
+    fig = px.pie(
+        df.loc[df['cluster'] == cluster, :],
+        'Relationship'
+    )
+    return fig
 
 def generate_education_pie(cluster):
-    pass
+    df = get_df_for_cluster_for_plots()
+    fig = px.pie(
+        df.loc[df['cluster'] == cluster, :],
+        'GradorPost'
+    )
+    return fig
 
 
 def generate_income_boxplot(cluster):
-    pass
+    df = get_df_for_cluster_for_plots()
+    fig = px.box(
+        df.loc[df['cluster'] == cluster, :],
+        y='Income'
+    )
+    return fig
 
 
 def generate_age_boxplot(cluster):
-    pass
+    df = get_df_for_cluster_for_plots()
+    fig = px.box(
+        df.loc[df['cluster'] == cluster, :],
+        y='Age'
+    )
+    return fig
+
+
+
+# HELP FUNCTIONS =========================
+
+def build_purchase_row():
+    return dbc.Container(
+        [
+            html.H5('Purchasing Info'),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_numpurchases_boxplot(0))
+                        ],
+                        width=6
+                    ),
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_check_boxplot(0))
+                        ],
+                        width=6
+                    )
+                ]
+            )
+        ],
+        className='mt-4'
+    )
+
+
+def build_categoricalinfo_row():
+    return dbc.Container(
+        [
+            html.H5('Categorical Info'),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_relationship_pie(0))
+                        ],
+                        width=6
+                    ),
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_education_pie(0))
+                        ],
+                        width=6
+                    )
+                ]
+            )
+        ],
+        className='mt-4'
+    )
+
+
+def build_profile_row():
+    return dbc.Container(
+        [
+            html.H5('User profile'),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_income_boxplot(0))
+                        ],
+                        width=6
+                    ),
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_age_boxplot(0))
+                        ],
+                        width=6
+                    )
+                ]
+            )
+        ],
+        className='mt-4'
+    )
 
 
 
@@ -64,7 +172,9 @@ def build_tab_3():
             ),
             dbc.Col(
                 [
-
+                    build_purchase_row(),
+                    build_categoricalinfo_row(),
+                    build_profile_row()
                 ],
                 width=8
             )
