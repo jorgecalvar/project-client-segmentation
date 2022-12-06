@@ -53,144 +53,235 @@ def build_tab_1():
     return html.Div(
         id='tab-1',
         children=[
-
-            html.Div(  # Primera fila
-                children=[
-                    html.Div(  # Bloque izquierdo
-                        children=[
-                            html.Div(  # filtros izquierda
-                                children=[
-                                    dcc.Dropdown(
-                                        options=options_dropdown_status,
-                                        placeholder="Marital Status",
-                                        id="status_dropdown_1"
+            dbc.Row(  # Primera fila
+                [
+                    dbc.Col(  # Bloque izquierdo
+                        [
+                            dbc.Row(
+                                [
+                                    dbc.Col( # Filtros 1
+                                        [
+                                            dcc.Dropdown(
+                                                options=options_dropdown_status,
+                                                placeholder="Marital Status",
+                                                id="status_dropdown_1"
+                                            ),
+                                            dcc.Dropdown(
+                                                options=options_dropdown_relation,
+                                                placeholder="Relation ",
+                                                id="relation_dropdown_1"
+                                            ),
+                                            dcc.Dropdown(
+                                                options=options_dropdown_education,
+                                                placeholder="Education",
+                                                id="education_dropdown_1"
+                                            ),
+                                            dcc.Dropdown(
+                                                options=options_dropdown_degree,
+                                                placeholder="Degree",
+                                                id="degree_dropdown_1"
+                                            ),
+                                        ],
+                                        width=2
                                     ),
-                                    dcc.Dropdown(
-                                        options=options_dropdown_relation,
-                                        placeholder="Relation ",
-                                        id="relation_dropdown_1"
+                                    dbc.Col(
+                                        [
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("Age")
+                                                        ],
+                                                        width=3
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.Age),
+                                                                max=max(df_selectedvariables.Age),
+                                                                value=[min(df_selectedvariables.Age),
+                                                                       max(df_selectedvariables.Age)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='Age_slider_1')
+                                                        ],
+                                                        width=9
+                                                    ),
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("Days")
+                                                        ],
+                                                        width=3
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.days_enrolled),
+                                                                max=max(df_selectedvariables.days_enrolled),
+                                                                value=[min(df_selectedvariables.days_enrolled),
+                                                                       max(df_selectedvariables.days_enrolled)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='days_enrolled_slider_1')
+                                                        ],
+                                                        width=9
+                                                    ),
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("Income")
+                                                        ],
+                                                        width=3
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.Income),
+                                                                max=max(df_selectedvariables.Income),
+                                                                value=[min(df_selectedvariables.Income),
+                                                                       max(df_selectedvariables.Income)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='Income_slider_1')
+                                                        ],
+                                                        width=9
+                                                    ),
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("Spent")
+                                                        ],
+                                                        width=3
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.Total_Spent),
+                                                                max=max(df_selectedvariables.Total_Spent),
+                                                                value=[min(df_selectedvariables.Total_Spent),
+                                                                       max(df_selectedvariables.Total_Spent)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='Total_Spent_slider_1')
+                                                        ],
+                                                        width=9
+                                                    ),
+                                                ]
+                                            ),
+                                        ],
+                                        width=5
                                     ),
-                                    dcc.Dropdown(
-                                        options=options_dropdown_education,
-                                        placeholder="Education",
-                                        id="education_dropdown_1"
-                                    ),
-                                    dcc.Dropdown(
-                                        options=options_dropdown_degree,
-                                        placeholder="Degree",
-                                        id="degree_dropdown_1"
-                                    ),
-                                ],
-                                style={
-                                    "width": "17%", "display": "inline-block",
-                                },
+                                    dbc.Col(
+                                        [
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("# Purchases")
+                                                        ],
+                                                        width=5
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.NumAllPurchases),
+                                                                max=max(df_selectedvariables.NumAllPurchases),
+                                                                value=[min(df_selectedvariables.NumAllPurchases),
+                                                                       max(df_selectedvariables.NumAllPurchases)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='NumAllPurchases_slider_1')
+                                                        ],
+                                                        width=7
+                                                    ),
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("Avg check")
+                                                        ],
+                                                        width=5
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.AverageCheck),
+                                                                max=max(df_selectedvariables.AverageCheck),
+                                                                value=[min(df_selectedvariables.AverageCheck),
+                                                                       max(df_selectedvariables.AverageCheck)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='AverageCheck_slider_1')
+                                                        ],
+                                                        width=7
+                                                    ),
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("% Discounted")
+                                                        ],
+                                                        width=5
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.ShareDealsPurchases),
+                                                                max=max(df_selectedvariables.ShareDealsPurchases),
+                                                                value=[min(df_selectedvariables.ShareDealsPurchases),
+                                                                       max(df_selectedvariables.ShareDealsPurchases)],
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='ShareDealsPurchases_slider_1')
+                                                        ],
+                                                        width=7
+                                                    ),
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5("# Kids")
+                                                        ],
+                                                        width=5
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            dcc.RangeSlider(
+                                                                min=min(df_selectedvariables.kidsteenHome),
+                                                                max=max(df_selectedvariables.kidsteenHome),
+                                                                value=[min(df_selectedvariables.kidsteenHome),
+                                                                       max(df_selectedvariables.kidsteenHome)],
+                                                                step=1,
+                                                                tooltip={"placement": "bottom", "always_visible": True},
+                                                                id='kidsteenHome_slider_1')
+                                                        ],
+                                                        width=7
+                                                    ),
+                                                ]
+                                            ),
+                                        ],
+                                        width=5
+                                    )
+                                ]
                             ),
-                            html.Div(  # labels centro
-                                children=[
-                                    html.H5("age"),
-                                    html.H5("days"),
-                                    html.H5("income$"),
-                                    html.H5("spent$"),
-                                ],
-                                style={
-                                    "width": "8%", "display": "inline-block", 'vertical-align': 'top'
-                                },
-                            ),
-                            html.Div(  # filtros centro
-                                children=[
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.Age), max=max(df_selectedvariables.Age),
-                                        value=[min(df_selectedvariables.Age), max(df_selectedvariables.Age)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='Age_slider_1'),
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.days_enrolled),
-                                        max=max(df_selectedvariables.days_enrolled),
-                                        value=[min(df_selectedvariables.days_enrolled),
-                                               max(df_selectedvariables.days_enrolled)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='days_enrolled_slider_1'),
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.Income), max=max(df_selectedvariables.Income),
-                                        value=[min(df_selectedvariables.Income), max(df_selectedvariables.Income)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='Income_slider_1'),
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.Total_Spent),
-                                        max=max(df_selectedvariables.Total_Spent),
-                                        value=[min(df_selectedvariables.Total_Spent),
-                                               max(df_selectedvariables.Total_Spent)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='Total_Spent_slider_1'),
-                                ],
-                                style={
-                                    "width": "30%", "display": "inline-block",
-                                },
-                            ),
-                            html.Div(  # labels centro
-                                children=[
-                                    html.H5("Num_purch"),
-                                    html.H5("Avg_Check$"),
-                                    html.H5("Deal_Purch%"),
-                                    html.H5("kids_home"),
-                                ],
-                                style={
-                                    "width": "12%", "display": "inline-block", 'vertical-align': 'top'
-                                },
-                            ),
-                            html.Div(  # filtros derecha
-                                children=[
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.NumAllPurchases),
-                                        max=max(df_selectedvariables.NumAllPurchases),
-                                        value=[min(df_selectedvariables.NumAllPurchases),
-                                               max(df_selectedvariables.NumAllPurchases)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='NumAllPurchases_slider_1'),
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.AverageCheck),
-                                        max=max(df_selectedvariables.AverageCheck),
-                                        value=[min(df_selectedvariables.AverageCheck),
-                                               max(df_selectedvariables.AverageCheck)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='AverageCheck_slider_1'),
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.ShareDealsPurchases),
-                                        max=max(df_selectedvariables.ShareDealsPurchases),
-                                        value=[min(df_selectedvariables.ShareDealsPurchases),
-                                               max(df_selectedvariables.ShareDealsPurchases)],
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='ShareDealsPurchases_slider_1'),
-                                    dcc.RangeSlider(
-                                        min=min(df_selectedvariables.kidsteenHome),
-                                        max=max(df_selectedvariables.kidsteenHome),
-                                        value=[min(df_selectedvariables.kidsteenHome),
-                                               max(df_selectedvariables.kidsteenHome)],
-                                        step=1,
-                                        tooltip={"placement": "bottom", "always_visible": True},
-                                        id='kidsteenHome_slider_1'),
-                                ],
-                                style={
-                                    "width": "29%", "display": "inline-block",
-                                },
-                            ),
-                            dcc.Graph(
-                                id="figure_1",
-                                style={
-                                    "display": "none"
-                                }
-                            )
+                            dcc.Graph(id='figure_1')
                         ],
                         style={
-                            "width": "48%",
-                            "height": "770px",
-                            "display": "inline-block",
-                            "border-style": "ridge",
-                            "border-color": "grey"
+                            "border-right": "solid gray"
                         },
+                        width=6,
+                        className='p-4'
                     ),
-
-                    html.Div(  # Bloque Derecho
+                    dbc.Col(  # Bloque Derecho
                         children=[
                             html.Div(  # filtros izquierda
                                 children=[
@@ -316,19 +407,20 @@ def build_tab_1():
                             )
                         ],
                         style={
-                            "width": "48%",
-                            "height": "750px",
-                            "display": "inline-block",
-                            "border-style": "ridge",
-                            "border-color": "grey"
+                            "border-left": "solid gray",
                         },
+                        width=6,
+                        className='p-4'
                     ),
                 ]
             ),
-            html.Div(  # segunda fila
-                children=[
-                    html.Div(  # Bloque abajo Izquierda
-                        children=[
+            html.Hr(
+                style={'border': 'solid gray'}
+            ),
+            dbc.Row(  # segunda fila
+                [
+                    dbc.Col(  # Bloque abajo Izquierda
+                        [
                             html.Div(  # filtros 1
                                 children=[
                                     dcc.Dropdown(
@@ -387,16 +479,13 @@ def build_tab_1():
                             )
                         ],
                         style={
-                            "width": "48%",
-                            "height": "500px",
-                            "display": "inline-block",
-                            "border-style": "ridge",
-                            "border-color": "grey"
+                            "border-right": "solid gray",
                         },
+                        width=6
                     ),
 
-                    html.Div(  # Bloque abajo Izquierda
-                        children=[
+                    dbc.Col(  # Bloque abajo Izquierda
+                        [
                             html.Div(  # filtros 1
                                 children=[
                                     dcc.Dropdown(
@@ -455,12 +544,9 @@ def build_tab_1():
                             )
                         ],
                         style={
-                            "width": "48%",
-                            "height": "500px",
-                            "display": "inline-block",
-                            "border-style": "ridge",
-                            "border-color": "grey"
+                            "border-left": "solid gray",
                         },
+                        width=6
                     ),
                 ]
             ),

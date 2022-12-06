@@ -40,7 +40,7 @@ def build_tabs():
                 children=[
                     dcc.Tab(
                         id='tab-1',
-                        label='EDA'
+                        label='Explore data'
                     ),
                     dcc.Tab(
                         id='tab-2',
