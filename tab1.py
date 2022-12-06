@@ -61,25 +61,37 @@ def build_tab_1():
                                 [
                                 html.P("""
                                 Una empresa ha recopilado datos sobre sus clientes y las compras que han realizado últimamente, con el fin de crear productos personalizados o hacer campañas 
-                                de marketing dirigidas quieren buscar perfiles de clientes que se puedan parecer entre ellos. Con estos datos la empresa os pide:"""),
+                                de marketing dirigidas quieren buscar perfiles de clientes que se puedan parecer entre ellos. Con estos datos la empresa os pide:""",
+                                       style={'padding': '5px'}),
+
                                 html.Ul([
                                     html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
                                     html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
-                                    html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes")
-                                ])
+                                    html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
+
+                                ],style={'padding': '5px'})
 
                                 ]
                             ),
                             dbc.Row(  # Primera fila
                                 [
-                                html.P("hello"
-
-                                       ),
+                                    dbc.Button(
+                                        "Info", id="popover-bottom-target", color="info"
+                                    ),
+                                    dbc.Popover(
+                                        [
+                                            dbc.PopoverHeader("Info"),
+                                            dbc.PopoverBody("information"),
+                                        ],
+                                        id="popover",
+                                        target="popover-bottom-target",  # needs to be the same as dbc.Button id
+                                        placement="bottom",
+                                        is_open=False,
+                                    )
+                                    ,
                                 ]
                             ),
-                            dbc.Row(  # Primera fila
                                 dcc.Graph(id='figure_2')
-                            ),
                         ],
                         width=4
                     ),
@@ -114,6 +126,7 @@ def build_tab_1():
                                                 id="degree_dropdown_1",
                                                 className='mb-3',
                                             ),
+                                            html.P("Relation & Degree are simplified versions of M_Status & Educ"),
                                         ],
                                         width=2
                                     ),
@@ -396,12 +409,12 @@ def build_tab_1():
                         width=6
                     ),
 
-                    dbc.Col(  # Bloque abajo Izquierda
+                    dbc.Col(  # Bloque abajo derecha
                         [
                             html.Div(  # filtros 1
                                 children=[
                                     dcc.Dropdown(
-                                        options=num_features,
+                                        options=cat_features,
                                         placeholder="X axis",
                                         id="x_box"
                                     ),
@@ -423,20 +436,7 @@ def build_tab_1():
                                     "width": "22%", "display": "inline-block",
                                 },
                             ),
-
                             html.Div(  # filtros 3
-                                children=[
-                                    dcc.Dropdown(
-                                        options=num_features,
-                                        placeholder="By Size",
-                                        id="size_box"
-                                    ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
-                            html.Div(  # filtros 4
                                 children=[
                                     dcc.Dropdown(
                                         options=cat_features,
@@ -448,6 +448,19 @@ def build_tab_1():
                                     "width": "22%", "display": "inline-block",
                                 },
                             ),
+                            html.Div(  # filtros 4
+                                children=[
+                                    dcc.Dropdown(
+                                        options=cat_features,
+                                        placeholder="Column separator",
+                                        id="facet_col_box"
+                                    ),
+                                ],
+                                style={
+                                    "width": "22%", "display": "inline-block",
+                                },
+                            ),
+
                             dcc.Graph(
                                 id="figure_4",
                                 style={
@@ -629,7 +642,8 @@ def create_callbacks_for_tab1():
             row=2,
             col=2
         )
-        fig.update_layout()
+        fig.update(layout_title_text='Categorical variables',layout_showlegend=False)
+        fig.update_layout(height=600)
         return (fig, {"display": "block"})
 
 
@@ -645,10 +659,15 @@ def create_callbacks_for_tab1():
         Input("color_scat", 'value'),
 
     )
+
+
+
     def figure3(x, y, size, colr):
-        fig = px.scatter(df_selectedvariables, x="Income", y="NumAllPurchases", color="GradorPost", size="Total_Spent",
-                         title="Total number of purchases vs Income, Size=Total amount of money spent ",
-                         color_discrete_map={"PostGrad Degree": "darkorange", "Undergrad Degree": "gold"})
+        #if x is None and y is None and colr is None and size is None:
+         #   x=y=colr=size="_"
+        #title=str("Scatterplot of " + x+" vs " + y + " where color=" + colr +" and size="+size)
+        fig = px.scatter(df_selectedvariables, x=x, y=y, color=colr, size=size,
+                         title="Scatterplot by size and color")
         fig.update_layout()
 
         return (fig, {"display": "block"})
@@ -658,11 +677,25 @@ def create_callbacks_for_tab1():
         Output("figure_4", "style"),
         Input("x_box", "value"),
         Input("y_box", "value"),
-        Input("size_box", "value"),
-        Input("color_box", 'value'),
+        Input("color_box", "value"),
+        Input("facet_col_box", 'value'),
     )
-    def figure4(x_box, y_box, size_box, color_box):
-        fig = px.box(df_selectedvariables, x='Education', y='Income', color='Relationship')
+    def figure4(x_box, y_box, color_box,facet_col_box):
+        #if x_box is None and y_box is None and color_box is None and facet_col_box is None:
+            #x_box=y_box=color_box=facet_col_box="_"
+        #title = str("Boxplots by " + x_box+" of " + y_box + " divided by color=" + color_box +" and separated in columns by "+facet_col_box)
+        fig = px.box(df_selectedvariables, x=x_box, y=y_box, color=color_box, facet_col=facet_col_box,
+                         title="Boxplots by category, color and possible column separation")
         fig.update_layout()
 
         return (fig, {"display": "block"})
+
+    @app.callback(
+        Output("popover", "is_open"),
+        [Input("popover-bottom-target", "n_clicks")],
+        [State("popover", "is_open")],
+    )
+    def toggle_popover(n, is_open):
+        if n:
+            return not is_open
+        return is_open
