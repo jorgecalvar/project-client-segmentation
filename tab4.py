@@ -22,7 +22,7 @@ df_clustered = None
 def get_df_for_cluster_for_plots():
     global df_clustered
     if df_clustered is None:
-        df_clustered = pd.read_csv('df_clustered_all.csv')
+        df_clustered = pd.read_csv('data/df_clustered_all.csv')
     return df_clustered
 
 

@@ -19,7 +19,7 @@ df_clustered = None
 def get_df_for_cluster_for_plots():
     global df_clustered
     if df_clustered is None:
-        df_clustered = pd.read_csv('df_clustered.csv')
+        df_clustered = pd.read_csv('data/df_clustered.csv')
         df_clustered['cluster'] = df_clustered['cluster'].replace({v: k for k, v in CLUSTER_MAPPINGS.items()})
     return df_clustered
 

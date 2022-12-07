@@ -13,7 +13,7 @@ import math
 
 from maindash import app
 
-df_selectedvariables = pd.read_csv("df_selectedvariables.csv")
+df_selectedvariables = pd.read_csv("data/df_selectedvariables.csv")
 
 # Crear opciones para Marital_Status
 statuses = df_selectedvariables["Marital_Status"].unique().tolist()
