@@ -8,6 +8,10 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 import pandas as pd
+import pickle
+
+import numpy as np
+from pathlib import Path
 
 from maindash import app, CLUSTER_MAPPINGS
 
@@ -67,6 +71,29 @@ def get_df_for_places():
         })
         df_for_places = final_df
     return df_for_places
+
+
+
+scaler = None
+model = None
+def predict_cluster(*args):
+    global scaler, model
+    if scaler is None:
+        scaler = pickle.load(Path('data/scaler_selected.obj').open('rb'))
+    if model is None:
+        model = pickle.load(Path('data/final_model.obj').open('rb'))
+    scaled = scaler.transform(
+            np.array(
+                [list(map(lambda x: 0 if x is None else x, args))]
+            )
+        )
+    for i, v in enumerate(args):
+        if v is None:
+            scaled[0, i] = 0
+    cluster_i = model.predict(
+        scaled
+    )
+    return {v: k for k, v in CLUSTER_MAPPINGS.items()}[cluster_i[0]]
 
 
 # GRAPHS =======================
@@ -164,10 +191,100 @@ def build_tab_4():
                     )
                 ],
                 className='mt-4'
+            ),
+            html.Hr(className='my-3'),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.H5('Predict a new customer'),
+                            dbc.InputGroup(
+                                [
+                                    dbc.Input(
+                                        id='input-days',
+                                        placeholder='Days enrolled'
+                                    )
+                                ],
+                                className='mt-3'
+                            ),
+                            dbc.InputGroup(
+                                [
+                                    dbc.Input(
+                                        id='input-totalspent',
+                                        placeholder='Total spent'
+                                    )
+                                ],
+                                className='mt-3'
+                            ),
+                            dbc.InputGroup(
+                                [
+                                    dbc.Input(
+                                        id='input-purchases',
+                                        placeholder='# Purchases'
+                                    )
+                                ],
+                                className='mt-3'
+                            ),
+                            dbc.InputGroup(
+                                [
+                                    dbc.Input(
+                                        id='input-check',
+                                        placeholder='Avg check'
+                                    )
+                                ],
+                                className='mt-3'
+                            ),
+                        ],
+                        width=4
+                    ),
+                    dbc.Col(
+                        [
+                            dbc.Card(
+                                dbc.CardBody(
+                                    [
+                                        html.P(
+                                            [
+                                                html.I('Please, complete at least one field to obtain a prediction.'),
+                                            ],
+                                            id='prediction-paragraph',
+                                            className='blockquote'
+                                        )
+                                    ]
+                                ),
+                                className='bg-primary text-white translate-middle start-50 top-50',
+                                style={'width': '40%'}
+                            )
+                        ],
+                        width=8
+                    )
+                ]
             )
         ],
         className='p-5'
     )
 
+
+# CALLBACKS
+
+def create_callbacks_for_tab4():
+    @app.callback(
+        Output('prediction-paragraph', 'children'),
+        Input('input-days', 'value'),
+        Input('input-totalspent', 'value'),
+        Input('input-purchases', 'value'),
+        Input('input-check', 'value')
+    )
+    def update_prediction(*args):
+        if all(map(lambda x: not x, args)):
+            return [html.I('Please, complete at least one field to obtain a prediction.')]
+        try:
+            args_int = list(map(lambda x: None if not x else int(x), args))
+        except:
+            return [html.I('All input must be integers')]
+        cluster = predict_cluster(*args_int)
+        return [
+            'The predicted cluster is:', html.Br(),
+            html.H3(html.B(cluster))
+        ]
 
 
