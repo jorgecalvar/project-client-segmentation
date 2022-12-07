@@ -180,6 +180,21 @@ def generate_age_boxplot(cluster):
     return fig
 
 
+def generate_days_graph(clusters):
+    df = get_df_by_cluster_for_plots(clusters)
+
+    labels = df['cluster'].unique()
+    hist_data = []
+    for cluster in labels:
+        hist_data.append(list(df.loc[df['cluster'] == cluster, 'days_enrolled']))
+    fig = ff.create_distplot(hist_data, labels, show_hist=False, colors=[CLUSTER_COLORS_MAP[x] for x in labels])
+    fig.update_layout(title='Days enrolled', showlegend=False)
+    fig.update_traces(fill='toself')
+
+    return fig
+
+
+
 def generate_radar(clusters):
     df = get_df_for_radar(clusters)
     fig = px.line_polar(
@@ -221,88 +236,85 @@ def build_purchase_row():
     )
 
 
-def build_categoricalinfo_row():
-    return dbc.Container(
-        [
-            html.H5('Categorical Info'),
-            dbc.Row(
-                [
-                    dbc.Col(
-                        [
-                            dcc.Graph(id='relationship-graph')
-                        ],
-                        width=6
-                    ),
-                    dbc.Col(
-                        [
-                            dcc.Graph(id='education-graph')
-                        ],
-                        width=6
-                    )
-                ]
-            )
-        ],
-        className='mt-4'
-    )
-
-
-def build_profile_row():
-    return dbc.Container(
-        [
-            html.H5('User profile'),
-            dbc.Row(
-                [
-                    dbc.Col(
-                        [
-                            dcc.Graph(id='income-graph')
-                        ],
-                        width=6
-                    ),
-                    dbc.Col(
-                        [
-                            dcc.Graph(id='age-graph')
-                        ],
-                        width=6
-                    )
-                ]
-            )
-        ],
-        className='mt-4'
-    )
-
-
 
 # MAIN =============================
 
 def build_tab_3():
-    return dbc.Row(
-        [
-            dbc.Col(
-                [
-                    html.H3(' Cluster Selection'),
-                    html.P('Here, you may select the customer segment that you want to explore:'),
-                    dcc.Dropdown(
-                        id='cluster-select',
-                        options=list(CLUSTER_MAPPINGS.keys()),
-                        value='Elite',
-                        multi=True
-                    ),
-                    html.Hr(),
-                    dcc.Graph(id='radar-graph')
-                ],
-                width=4,
-                className='p-5'
-            ),
-            dbc.Col(
-                [
-                    build_purchase_row(),
-                    build_categoricalinfo_row(),
-                    build_profile_row()
-                ],
-                width=8
-            )
-        ]
-    )
+    return html.Div([
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        html.H3(' Cluster Selection'),
+                        html.P('Here, you may select the customer segment that you want to explore:'),
+                        dcc.Dropdown(
+                            id='cluster-select',
+                            options=list(CLUSTER_MAPPINGS.keys()),
+                            value='Elite',
+                            multi=True
+                        )
+                    ],
+                    width=4
+                ),
+                dbc.Col(
+                    [
+
+                    ],
+                    width=8
+                )
+            ],
+            className='p-5'
+        ),
+        html.Hr(className='mx-3'),
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dcc.Graph(id='radar-graph')
+                    ],
+                    width=4
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(id='numpurchases-graph')
+                    ],
+                    width=4
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(id='check-graph')
+                    ],
+                    width=4
+                ),
+            ],
+            className='p-5'
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dcc.Graph(id='days-graph')
+                    ],
+                    width=4
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(id='income-graph')
+                    ],
+                    width=4
+                ),
+                dbc.Col(
+                    [
+                        dcc.Graph(id='age-graph')
+                    ],
+                    width=4
+                ),
+            ],
+            className='px-5 pb-5'
+        ),
+    ])
+
+
 
 
 # CALLBACKS ===================================
@@ -319,9 +331,10 @@ def create_callbacks_for_tab3():
         Output('radar-graph', 'figure'),
         Output('numpurchases-graph', 'figure'),
         Output('check-graph', 'figure'),
-        Output('relationship-graph', 'figure'),
-        Output('education-graph', 'figure'),
+        #Output('relationship-graph', 'figure'),
+        #Output('education-graph', 'figure'),
         Output('income-graph', 'figure'),
+        Output('days-graph', 'figure'),
         Output('age-graph', 'figure'),
         Input('cluster-select', 'value')
     )
@@ -330,9 +343,10 @@ def create_callbacks_for_tab3():
         return (generate_radar(processed_cluster),
                 generate_numpurchases_boxplot(processed_cluster),
                 generate_check_boxplot(processed_cluster),
-                generate_relationship_pie(processed_cluster),
-                generate_education_pie(processed_cluster),
+                # generate_relationship_pie(processed_cluster),
+                # generate_education_pie(processed_cluster),
                 generate_income_boxplot(processed_cluster),
+                generate_days_graph(processed_cluster),
                 generate_age_boxplot(processed_cluster))
 
     """
@@ -388,8 +402,5 @@ def create_callbacks_for_tab3():
         return generate_age_boxplot(process_cluster_input(cluster))
         
     """
-
-
-
 
 
