@@ -235,6 +235,92 @@ def build_purchase_row():
         className='mt-4'
     )
 
+def generate_cluster_cards():
+    return dbc.Row(
+        [
+            dbc.Col(
+                [
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.P(
+                                    [
+                                        html.H4(html.B('Elite')), html.Br(),
+                                        'The most valuable customers. They spend a lot and many times.'
+                                    ],
+                                )
+                            ]
+                        ),
+                        className='bg-primary text-white translate-middle start-50 top-50',
+                        style={'width': '80%', 'height': '100%'}
+                    ),
+                ],
+                width=3,
+                className='px-3'
+            ),
+            dbc.Col(
+                [
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.P(
+                                    [
+                                        html.H4(html.B('High Potential')), html.Br(),
+                                        'The second most valuable segment. They buy a lot of times, but they have the capability to spend more.'
+                                    ],
+                                )
+                            ]
+                        ),
+                        className='bg-primary text-white translate-middle start-50 top-50',
+                        style={'width': '80%', 'height': '100%'}
+                    ),
+                ],
+                width=3,
+                className='px-3'
+            ),
+            dbc.Col(
+                [
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.P(
+                                    [
+                                        html.H4(html.B('Low Recent')), html.Br(),
+                                        'The are recent customer who do not spend much, as they are young and do not have money.'
+                                    ],
+                                )
+                            ]
+                        ),
+                        className='bg-primary text-white translate-middle start-50 top-50',
+                        style={'width': '80%', 'height': '100%'}
+                    ),
+                ],
+                width=3,
+                className='px-3'
+            ),
+            dbc.Col(
+                [
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.P(
+                                    [
+                                        html.H4(html.B('Low Old')), html.Br(),
+                                        'Despite being long-time customers, their value has not increased.'
+                                    ],
+                                )
+                            ]
+                        ),
+                        className='bg-primary text-white translate-middle start-50 top-50',
+                        style={'width': '80%', 'height': '100%'}
+                    ),
+                ],
+                width=3,
+                className='px-3'
+            ),
+        ]
+    )
+
 
 
 # MAIN =============================
@@ -258,7 +344,7 @@ def build_tab_3():
                 ),
                 dbc.Col(
                     [
-
+                        generate_cluster_cards()
                     ],
                     width=8
                 )
