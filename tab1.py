@@ -13,7 +13,7 @@ import math
 
 from maindash import app
 
-df_selectedvariables = pd.read_csv("data/df_selectedvariables.csv")
+df_selectedvariables = pd.read_csv("df_selectedvariables.csv")
 
 # Crear opciones para Marital_Status
 statuses = df_selectedvariables["Marital_Status"].unique().tolist()
@@ -61,16 +61,8 @@ def build_tab_1():
                                 [
                                 html.P("""
                                 Una empresa ha recopilado datos sobre sus clientes y las compras que han realizado últimamente, con el fin de crear productos personalizados o hacer campañas 
-                                de marketing dirigidas quieren buscar perfiles de clientes que se puedan parecer entre ellos. Con estos datos la empresa os pide:""",
+                                de marketing dirigidas quieren buscar perfiles de clientes que se puedan parecer entre ellos. """,
                                 ),
-
-                                html.Ul([
-                                    html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
-                                    html.Li("Construir un modelo de clustering para los diferentes tipos de clientes seleccionando las variables que se consideren más adecuadas para el estudio"),
-                                    html.Li("Mediante un cuadro de mando, visualizar los aspectos más relevantes del descriptivo junto con la posibilidad de agrupar un nuevo cliente con uno de los clusters anteriores."),
-
-                                ])
-
                                 ]
                             ),
                             dbc.Container(  # Primera fila
@@ -82,7 +74,10 @@ def build_tab_1():
                                     dbc.Popover(
                                         [
                                             dbc.PopoverHeader("Info"),
-                                            dbc.PopoverBody("information"),
+                                            dbc.PopoverBody("""Con estos datos la empresa os pide:
+Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes
+, Construir un modelo de clustering para los diferentes tipos de clientes seleccionando las variables que se consideren más adecuadas para el estudio
+, Mediante un cuadro de mando, visualizar los aspectos más relevantes del descriptivo junto con la posibilidad de agrupar un nuevo cliente con uno de los clusters anteriores"""),
                                         ],
                                         id="popover",
                                         target="popover-bottom-target",  # needs to be the same as dbc.Button id
