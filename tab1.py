@@ -106,7 +106,7 @@ Data:
 -NumCatalogPurchases: Purchases made using a catalogue
 -NumStorePurchases: Purchases made directly in stores
 -NumWebVisitsMonth: Visits to company’s website last month
-""", style={'white-space':'pre', 'width':'700px'}
+""", style={'white-space':'wrap', 'width':'700px'}
                                                            ),
                                         ],
                                         id="popover",
