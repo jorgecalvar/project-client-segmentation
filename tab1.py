@@ -62,21 +62,22 @@ def build_tab_1():
                                 html.P("""
                                 Una empresa ha recopilado datos sobre sus clientes y las compras que han realizado últimamente, con el fin de crear productos personalizados o hacer campañas 
                                 de marketing dirigidas quieren buscar perfiles de clientes que se puedan parecer entre ellos. Con estos datos la empresa os pide:""",
-                                       style={'padding': '5px'}),
+                                ),
 
                                 html.Ul([
                                     html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
-                                    html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
-                                    html.Li("Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes"),
+                                    html.Li("Construir un modelo de clustering para los diferentes tipos de clientes seleccionando las variables que se consideren más adecuadas para el estudio"),
+                                    html.Li("Mediante un cuadro de mando, visualizar los aspectos más relevantes del descriptivo junto con la posibilidad de agrupar un nuevo cliente con uno de los clusters anteriores."),
 
-                                ],style={'padding': '5px'})
+                                ])
 
                                 ]
                             ),
                             dbc.Container(  # Primera fila
                                 [
                                     dbc.Button(
-                                        "Info", id="popover-bottom-target", color="info"
+                                        "Info", id="popover-bottom-target", color="info",
+                                        className='m-2'
                                     ),
                                     dbc.Popover(
                                         [
@@ -93,7 +94,8 @@ def build_tab_1():
                             ),
                                 dcc.Graph(id='figure_2')
                         ],
-                        width=4
+                        width=4,
+                        className='p-4'
                     ),
 
                     dbc.Col(  # Bloque derecho
@@ -126,7 +128,7 @@ def build_tab_1():
                                                 id="degree_dropdown_1",
                                                 className='mb-3',
                                             ),
-                                            html.P("Relation & Degree are simplified versions of M_Status & Educ"),
+                                           # html.P("Relation & Degree are simplified versions of M_Status & Educ"),
                                         ],
                                         width=2
                                     ),
@@ -346,55 +348,48 @@ def build_tab_1():
                 [
                     dbc.Col(  # Bloque abajo Izquierda
                         [
-                            html.Div(  # filtros 1
-                                children=[
-                                    dcc.Dropdown(
-                                        options=num_features,
-                                        placeholder="X axis",
-                                        id="x_scat"
+                            dbc.Row(
+                                [
+                                    dbc.Col(
+                                        dcc.Dropdown(
+                                            options=num_features,
+                                            placeholder="X axis",
+                                            id="x_scat"
+                                        ),
+                                        width=3
                                     ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
-
-                            html.Div(  # filtros 2
-                                children=[
-                                    dcc.Dropdown(
-                                        options=num_features,
-                                        placeholder="Y axis",
-                                        id="y_scat"
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=num_features,
+                                                placeholder="Y axis",
+                                                id="y_scat"
+                                            )
+                                        ],
+                                        width=3
                                     ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
-
-                            html.Div(  # filtros 3
-                                children=[
-                                    dcc.Dropdown(
-                                        options=num_features,
-                                        placeholder="By Size",
-                                        id="size_scat"
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=num_features,
+                                                placeholder="By Size",
+                                                id="size_scat"
+                                            )
+                                        ],
+                                        width=3
                                     ),
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=cat_features,
+                                                placeholder="Category by Color",
+                                                id="color_scat"
+                                            )
+                                        ],
+                                        width=3
+                                    )
                                 ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
-                            html.Div(  # filtros 4
-                                children=[
-                                    dcc.Dropdown(
-                                        options=cat_features,
-                                        placeholder="Category by Color",
-                                        id="color_scat"
-                                    ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
+                                className='mb-3'
                             ),
                             dcc.Graph(
                                 id="figure_3",
@@ -406,60 +401,58 @@ def build_tab_1():
                         style={
                             "border-right": "solid gray",
                         },
-                        width=6
+                        width=6,
+                        className='p-4'
                     ),
 
                     dbc.Col(  # Bloque abajo derecha
                         [
-                            html.Div(  # filtros 1
-                                children=[
-                                    dcc.Dropdown(
-                                        options=cat_features,
-                                        placeholder="X axis",
-                                        id="x_box"
+                            dbc.Row(
+                                [
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=cat_features,
+                                                placeholder="X axis",
+                                                id="x_box"
+                                            )
+                                        ],
+                                        width=3
+                                    ),
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=num_features,
+                                                placeholder="Y axis",
+                                                id="y_box"
+                                            )
+                                        ],
+                                        width=3
+                                    ),
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=cat_features,
+                                                placeholder="Category by Color",
+                                                id="color_box"
+                                            )
+                                        ],
+                                        width=3
+                                    ),
+                                    dbc.Col(
+                                        [
+                                            dcc.Dropdown(
+                                                options=cat_features,
+                                                placeholder="Column separator",
+                                                id="facet_col_box"
+                                            )
+                                        ],
+                                        width=3
                                     ),
                                 ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
+                                className='mb-3'
                             ),
 
-                            html.Div(  # filtros 2
-                                children=[
-                                    dcc.Dropdown(
-                                        options=num_features,
-                                        placeholder="Y axis",
-                                        id="y_box"
-                                    ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
-                            html.Div(  # filtros 3
-                                children=[
-                                    dcc.Dropdown(
-                                        options=cat_features,
-                                        placeholder="Category by Color",
-                                        id="color_box"
-                                    ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
-                            html.Div(  # filtros 4
-                                children=[
-                                    dcc.Dropdown(
-                                        options=cat_features,
-                                        placeholder="Column separator",
-                                        id="facet_col_box"
-                                    ),
-                                ],
-                                style={
-                                    "width": "22%", "display": "inline-block",
-                                },
-                            ),
 
                             dcc.Graph(
                                 id="figure_4",
@@ -471,7 +464,8 @@ def build_tab_1():
                         style={
                             "border-left": "solid gray",
                         },
-                        width=6
+                        width=6,
+                        className='p-4'
                     ),
                 ]
             ),
@@ -602,7 +596,7 @@ def create_callbacks_for_tab1():
         fig = make_subplots(rows=2,
                             cols=2,
                             specs=[[{"type": "pie"}, {"type": "pie"}],[{"type": "pie"}, {"type": "pie"}]],
-                            subplot_titles=["In a rellation or not", "Grad or PostGrad Degree", "Type of Relationship", "Specific Education"])
+                            subplot_titles=["In a relationship or not", "Grad or PostGrad Degree", "Type of Relationship", "Specific Education"])
 
         fig.add_trace(
             go.Pie(
