@@ -426,6 +426,8 @@ def create_callbacks_for_tab3():
     )
     def update_graphs(cluster):
         processed_cluster = process_cluster_input(cluster)
+        if not cluster:
+            return (px.scatter(title='Enter at east one cluster to display...'),)*6
         return (generate_radar(processed_cluster),
                 generate_numpurchases_boxplot(processed_cluster),
                 generate_check_boxplot(processed_cluster),

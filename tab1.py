@@ -710,9 +710,6 @@ def create_callbacks_for_tab1():
         Input("color_scat", 'value'),
 
     )
-
-
-
     def figure3(x, y, size, colr):
         #if x is None and y is None and colr is None and size is None:
          #   x=y=colr=size="_"
