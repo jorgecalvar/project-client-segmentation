@@ -31,6 +31,25 @@ def get_df_by_cluster_for_plots(cluster):
         return df
 
 
+df_for_radar = None
+def get_df_for_radar():
+    global df_for_radar
+    selected_columns = ['NumAllPurchases', 'AverageCheck', 'Income', 'Age', 'days_enrolled']
+    if df_for_radar is None:
+        df = get_df_for_cluster_for_plots()
+        df2 = df.loc[:, selected_columns+['cluster']]
+        for c in selected_columns:
+            min_value = df2[c].min()
+            max_value = df2[c].max()
+            df2[c] = (df2[c]-min_value)/(max_value-min_value)*10
+        df3 = df2.groupby('cluster').mean().reset_index()
+        df_for_radar = pd.melt(
+            df3,
+            id_vars=['cluster']
+        )
+    return df_for_radar
+
+
 # GRAPHS ===========
 
 def generate_numpurchases_boxplot(cluster):
@@ -95,6 +114,18 @@ def generate_age_boxplot(cluster):
     fig.update_yaxes(title='')
     return fig
 
+
+def generate_radar(clusters):
+    df = get_df_for_radar()
+    fig = px.line_polar(
+        df,
+        theta='variable',
+        r='value',
+        color='cluster',
+        line_close=True
+    )
+    fig.update_traces(fill='toself')
+    return fig
 
 
 # HELP FUNCTIONS =========================
@@ -184,12 +215,13 @@ def build_tab_3():
                 [
                     html.H3(' Cluster Selection'),
                     html.P('Here, you may select the customer segment that you want to explore:'),
-                    html.Hr(),
                     dcc.Dropdown(
                         id='cluster-select',
                         options=list(CLUSTER_MAPPINGS.keys()),
                         value='Elite'
-                    )
+                    ),
+                    html.Hr(),
+                    dcc.Graph(id='radar-graph', figure=generate_radar(None))
                 ],
                 width=4,
                 className='p-5'
