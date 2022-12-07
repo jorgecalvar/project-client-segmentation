@@ -74,9 +74,40 @@ def build_tab_1():
                                         [
                                             dbc.PopoverHeader("Info"),
                                             dbc.PopoverBody("""With this data the company asks you to:
-Perform a descriptive analysis of the data looking for common patterns among customers.
-Build a clustering model for the different types of customers by selecting the variables considered most appropriate for the study.
-Using a dashboard, visualize the most relevant aspects of the descriptive together with the possibility of grouping a new customer with one of the previous clusters"""),
+Perform a descriptive analysis of the data looking for 
+common patterns among customers.
+Build a clustering model for the different types of customers by 
+selecting the variables considered most appropriate for the study.
+Using a dashboard, visualize the most relevant aspects 
+of the descriptive together with the possibility of 
+grouping a new customer with one of the previous clusters
+
+Data:
+-Year_Birth: Customer's birth year
+-Education: Customer's education level
+-Marital_Status: Customer's marital status
+-Income: Customer's yearly household income
+-Kidhome: Number of children in customer's household
+-Teenhome: Number of teenagers in customer's household
+-Dt_Customer: Date of customer's enrollment with the company
+-Recency: Number of days since customer's last purchase
+-Complain: 1 if the customer complained in the last 2 years,
+ 0 otherwise
+-MntWines: Amount spent on wine in last 2 years
+-MntFruits: Amount spent on fruits in last 2 years
+-MntMeatProducts: Amount spent on meat in last 2 years
+-MntFishProducts: Amount spent on fish in last 2 years
+-MntSweetProducts: Amount spent on sweets in last 2 years
+-MntGoldProds: Amount spent on gold in last 2 years
+-NumDealsPurchases: N of purchases made with discount
+-AcceptedCmpX: 1 if offer accepted in the X campaign
+-Response: 1if offer accepted  in the last campaign
+-NumWebPurchases: Purchases made in the website
+-NumCatalogPurchases: Purchases made using a catalogue
+-NumStorePurchases: Purchases made directly in stores
+-NumWebVisitsMonth: Visits to company’s website last month
+""", style={'white-space':'pre'}
+                                                           ),
                                         ],
                                         id="popover",
                                         target="popover-bottom-target",  # needs to be the same as dbc.Button id
