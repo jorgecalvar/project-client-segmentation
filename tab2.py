@@ -72,8 +72,9 @@ def build_tab_2():
         [
             dbc.Col(
                 [
-                    html.H4('Methodology'),
                     dcc.Graph(id='cluster_histogram', figure=generate_cluster_histogram()),
+                    html.Br(),
+                    html.Br(),
                     dcc.Graph(id='elbow_graph', figure=generate_elbow_graph())
                 ],
                 width=6,
@@ -81,7 +82,11 @@ def build_tab_2():
             ),
             dbc.Col(
                 [
-                    html.H4('3D Scatter'),
+                    html.H4('Methodology'),
+                    html.P('To create the customer segmenets, we have finally decided to use KMeans. Results with other '
+                           'models (such as agglomerative clustering) were very similar. Instead of passing all the '
+                           'variables to the model, we have created a few very meaningful variables and used only those '
+                           'to create the segments.'),
                     dcc.Graph(id='cluster_3dscatter', figure=generate_cluster_3dscatter())
                 ],
                 width=6,
