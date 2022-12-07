@@ -6,10 +6,11 @@ import dash_bootstrap_components as dbc
 
 import plotly.graph_objects as go
 import plotly.express as px
+import plotly.figure_factory as ff
 
 import pandas as pd
 
-from maindash import app, CLUSTER_MAPPINGS
+from maindash import app, CLUSTER_MAPPINGS, CLUSTER_ORDER, CLUSTER_COLORS_MAP
 
 
 
@@ -21,6 +22,7 @@ def get_df_for_cluster_for_plots():
     if df_clustered is None:
         df_clustered = pd.read_csv('data/df_clustered.csv')
         df_clustered['cluster'] = df_clustered['cluster'].replace({v: k for k, v in CLUSTER_MAPPINGS.items()})
+        df_clustered = df_clustered.sort_values('cluster', key=lambda s: s.apply(lambda x: CLUSTER_ORDER.index(x)))
     return df_clustered
 
 def get_df_by_cluster_for_plots(cluster):
@@ -35,6 +37,13 @@ df_for_radar = None
 def get_df_for_radar(clusters):
     global df_for_radar
     selected_columns = ['NumAllPurchases', 'AverageCheck', 'Income', 'Age', 'days_enrolled']
+    column_pretty_mapping = {
+        'NumAllPurchases': '# Purchases',
+        'AverageCheck': 'Avg check',
+        'Income': 'Income',
+        'Age': 'Age',
+        'days_enrolled': 'Days enrolled'
+    }
     df = get_df_by_cluster_for_plots(clusters)
     df2 = df.loc[:, selected_columns+['cluster']]
     for c in selected_columns:
@@ -46,6 +55,7 @@ def get_df_for_radar(clusters):
         df3,
         id_vars=['cluster']
     )
+    df_for_radar['variable'] = df_for_radar['variable'].replace(column_pretty_mapping)
     return df_for_radar
 
 
@@ -53,25 +63,51 @@ def get_df_for_radar(clusters):
 
 def generate_numpurchases_boxplot(cluster):
     df = get_df_by_cluster_for_plots(cluster)
+
+    labels = df['cluster'].unique()
+    hist_data = []
+    for cluster in labels:
+        hist_data.append(list(df.loc[df['cluster'] == cluster, 'NumAllPurchases']))
+    fig = ff.create_distplot(hist_data, labels, show_hist=False, colors=[CLUSTER_COLORS_MAP[x] for x in labels])
+    fig.update_layout(title='Number of purchases', showlegend=False)
+    fig.update_traces(fill='toself')
+
+    """
     fig = px.box(
         df,
         x='cluster',
         y='NumAllPurchases',
-        title='Number of purchases'
+        title='Number of purchases',
+        color_discrete_map=CLUSTER_COLORS_MAP
     )
     fig.update_yaxes(title='')
+    """
+
     return fig
 
 
 def generate_check_boxplot(cluster):
     df = get_df_by_cluster_for_plots(cluster)
+
+    labels = df['cluster'].unique()
+    hist_data = []
+    for cluster in labels:
+        hist_data.append(list(df.loc[df['cluster'] == cluster, 'AverageCheck']))
+    fig = ff.create_distplot(hist_data, labels, show_hist=False, colors=[CLUSTER_COLORS_MAP[x] for x in labels])
+    fig.update_layout(title='Average check', showlegend=False)
+    fig.update_traces(fill='toself')
+
+    """
     fig = px.box(
         df,
         x='cluster',
         y='AverageCheck',
-        title='Average check'
+        title='Average check',
+        color='cluster',
+        color_discrete_map=CLUSTER_COLORS_MAP
     )
     fig.update_yaxes(title='')
+    """
     return fig
 
 
@@ -96,25 +132,51 @@ def generate_education_pie(cluster):
 
 def generate_income_boxplot(cluster):
     df = get_df_by_cluster_for_plots(cluster)
+
+    labels = df['cluster'].unique()
+    hist_data = []
+    for cluster in labels:
+        hist_data.append(list(df.loc[df['cluster'] == cluster, 'Income']))
+    fig = ff.create_distplot(hist_data, labels, show_hist=False, colors=[CLUSTER_COLORS_MAP[x] for x in labels])
+    fig.update_layout(title='Income', showlegend=False)
+    fig.update_traces(fill='toself')
+
+    """
     fig = px.box(
         df,
         x='cluster',
         y='Income',
-        title='Income'
+        title='Income',
+        color_discrete_map=CLUSTER_COLORS_MAP
     )
     fig.update_yaxes(title='')
+    """
+
     return fig
 
 
 def generate_age_boxplot(cluster):
     df = get_df_by_cluster_for_plots(cluster)
+
+    labels = df['cluster'].unique()
+    hist_data = []
+    for cluster in labels:
+        hist_data.append(list(df.loc[df['cluster'] == cluster, 'Age']))
+    fig = ff.create_distplot(hist_data, labels, show_hist=False, colors=[CLUSTER_COLORS_MAP[x] for x in labels])
+    fig.update_layout(title='Age', showlegend=False)
+    fig.update_traces(fill='toself')
+
+
+    """
     fig = px.box(
         df,
         x='cluster',
         y='Age',
-        title='Age'
+        title='Age',
+        color_discrete_map=CLUSTER_COLORS_MAP
     )
     fig.update_yaxes(title='')
+    """
     return fig
 
 
@@ -125,7 +187,8 @@ def generate_radar(clusters):
         theta='variable',
         r='value',
         color='cluster',
-        line_close=True
+        line_close=True,
+        color_discrete_map=CLUSTER_COLORS_MAP
     )
     fig.update_traces(fill='toself')
     return fig
@@ -252,7 +315,27 @@ def process_cluster_input(cluster):
 
 def create_callbacks_for_tab3():
 
-    #Radar Plot
+    @app.callback(
+        Output('radar-graph', 'figure'),
+        Output('numpurchases-graph', 'figure'),
+        Output('check-graph', 'figure'),
+        Output('relationship-graph', 'figure'),
+        Output('education-graph', 'figure'),
+        Output('income-graph', 'figure'),
+        Output('age-graph', 'figure'),
+        Input('cluster-select', 'value')
+    )
+    def update_graphs(cluster):
+        processed_cluster = process_cluster_input(cluster)
+        return (generate_radar(processed_cluster),
+                generate_numpurchases_boxplot(processed_cluster),
+                generate_check_boxplot(processed_cluster),
+                generate_relationship_pie(processed_cluster),
+                generate_education_pie(processed_cluster),
+                generate_income_boxplot(processed_cluster),
+                generate_age_boxplot(processed_cluster))
+
+    """
     @app.callback(
         Output('radar-graph', 'figure'),
         Input('cluster-select', 'value')
@@ -304,7 +387,7 @@ def create_callbacks_for_tab3():
     def update_age_graph(cluster):
         return generate_age_boxplot(process_cluster_input(cluster))
         
-
+    """
 
 
 

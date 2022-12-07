@@ -13,7 +13,7 @@ import pickle
 import numpy as np
 from pathlib import Path
 
-from maindash import app, CLUSTER_MAPPINGS
+from maindash import app, CLUSTER_MAPPINGS, CLUSTER_ORDER
 
 
 # DATA =======================
@@ -46,6 +46,8 @@ def get_df_for_products():
             'MntSweetProducts': 'Sweet',
             'MntGoldProds': 'Gold'
         })
+
+        final_df = final_df.sort_values('cluster', key=lambda s: s.apply(lambda x: CLUSTER_ORDER.index(x)))
         df_for_products = final_df
     return df_for_products
 
@@ -69,6 +71,7 @@ def get_df_for_places():
             'NumCatalogPurchases': 'Catalog',
             'NumStorePurchases': 'Store',
         })
+        final_df = final_df.sort_values('cluster', key=lambda s: s.apply(lambda x: CLUSTER_ORDER.index(x)))
         df_for_places = final_df
     return df_for_places
 

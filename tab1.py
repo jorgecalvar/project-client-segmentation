@@ -51,7 +51,6 @@ cat_features = df_cat.columns.to_list()
 
 def build_tab_1():
     return html.Div(
-        id='tab-1',
         children=[
             dbc.Row(  # Primera fila
                 [
