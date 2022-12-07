@@ -5,3 +5,5 @@ plotly
 matplotlib
 seaborn
 dash
+pickle
+plotly

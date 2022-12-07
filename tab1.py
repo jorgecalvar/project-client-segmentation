@@ -13,7 +13,7 @@ import math
 
 from maindash import app
 
-df_selectedvariables = pd.read_csv("df_selectedvariables.csv")
+df_selectedvariables = pd.read_csv("data/df_selectedvariables.csv")
 
 # Crear opciones para Marital_Status
 statuses = df_selectedvariables["Marital_Status"].unique().tolist()
@@ -491,7 +491,6 @@ def create_callbacks_for_tab1():
 
         df = df_selectedvariables
 
-        print(stat)
 
         dff = df.loc[
             (df.Age >= ag[0]) & (df.Age <= ag[1]) & # Age
@@ -564,8 +563,6 @@ def create_callbacks_for_tab1():
     def figure2(stat, rel, edu, deg, ag, day, inco, spen, purch, check, share, kids):
 
         df = df_selectedvariables
-
-        print(stat)
 
         dff = df.loc[
             (df.Age >= ag[0]) & (df.Age <= ag[1]) & # Age
