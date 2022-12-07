@@ -117,6 +117,7 @@ def generate_age_boxplot(cluster):
 
 def generate_radar(clusters):
     df = get_df_for_radar()
+    df[df['cluster'].isin([clusters])]
     fig = px.line_polar(
         df,
         theta='variable',
@@ -218,10 +219,11 @@ def build_tab_3():
                     dcc.Dropdown(
                         id='cluster-select',
                         options=list(CLUSTER_MAPPINGS.keys()),
-                        value='Elite'
+                        value='Elite',
+                        multi=True
                     ),
                     html.Hr(),
-                    dcc.Graph(id='radar-graph', figure=generate_radar(None))
+                    dcc.Graph(id='radar-graph')
                 ],
                 width=4,
                 className='p-5'
@@ -241,6 +243,15 @@ def build_tab_3():
 # CALLBACKS ===================================
 
 def create_callbacks_for_tab3():
+
+    #Radar Plot
+    @app.callback(
+        Output('radar-graph', 'figure'),
+        [Input('cluster-select', 'value')]
+    )
+    def update_radar_graph(cluster):
+        return generate_radar(cluster)
+
     @app.callback(
         Output('numpurchases-graph', 'figure'),
         Input('cluster-select', 'value')
