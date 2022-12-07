@@ -588,7 +588,7 @@ def create_callbacks_for_tab1():
         fig = make_subplots(rows=2,
                             cols=2,
                             specs=[[{"type": "pie"}, {"type": "pie"}],[{"type": "pie"}, {"type": "pie"}]],
-                            subplot_titles=["In a relationship or not", "Grad or PostGrad Degree", "Type of Relationship", "Specific Education"])
+                            subplot_titles=["Relationship",  "Type of Relationship","Grad or PostGrad", "Specific Education"])
 
         fig.add_trace(
             go.Pie(
