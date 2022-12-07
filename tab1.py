@@ -666,6 +666,9 @@ def create_callbacks_for_tab1():
         #if x is None and y is None and colr is None and size is None:
          #   x=y=colr=size="_"
         #title=str("Scatterplot of " + x+" vs " + y + " where color=" + colr +" and size="+size)
+        if x is None or y is None:
+            return px.scatter(title='Please, enter the variables you want to display!'), {'display': 'block'}
+
         fig = px.scatter(df_selectedvariables, x=x, y=y, color=colr, size=size,
                          title="Scatterplot by size and color")
         fig.update_layout()
@@ -684,6 +687,9 @@ def create_callbacks_for_tab1():
         #if x_box is None and y_box is None and color_box is None and facet_col_box is None:
             #x_box=y_box=color_box=facet_col_box="_"
         #title = str("Boxplots by " + x_box+" of " + y_box + " divided by color=" + color_box +" and separated in columns by "+facet_col_box)
+        if x_box is None or y_box is None:
+            return px.scatter(title='Please, enter the variables you want to display!'), {'display': 'block'}
+
         fig = px.box(df_selectedvariables, x=x_box, y=y_box, color=color_box, facet_col=facet_col_box,
                          title="Boxplots by category, color and possible column separation")
         fig.update_layout()
