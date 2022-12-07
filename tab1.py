@@ -51,11 +51,10 @@ cat_features = df_cat.columns.to_list()
 
 def build_tab_1():
     return html.Div(
-        id='tab-1',
         children=[
             dbc.Row(  # Primera fila
                 [
-                    dbc.Col(
+                   dbc.Col(
                         [
                             dbc.Container(  # Primera fila
                                 [
@@ -86,9 +85,7 @@ Using a dashboard, visualize the most relevant aspects of the descriptive togeth
                                     )
                                     ,
                                 ]
-                            ),
-                                dcc.Graph(id='figure_2')
-                        ],
+                            )                        ],
                         width=4,
                         className='p-4'
                     ),
@@ -97,7 +94,7 @@ Using a dashboard, visualize the most relevant aspects of the descriptive togeth
                         [
                             dbc.Row(
                                 [
-                                    dbc.Col( # Filtros 1
+                                    dbc.Col(  # Filtros 1
                                         [
                                             dcc.Dropdown(
                                                 options=options_dropdown_status,
@@ -123,7 +120,7 @@ Using a dashboard, visualize the most relevant aspects of the descriptive togeth
                                                 id="degree_dropdown_1",
                                                 className='mb-3',
                                             ),
-                                           # html.P("Relation & Degree are simplified versions of M_Status & Educ"),
+                                            # html.P("Relation & Degree are simplified versions of M_Status & Educ"),
                                         ],
                                         width=2
                                     ),
@@ -323,7 +320,30 @@ Using a dashboard, visualize the most relevant aspects of the descriptive togeth
                                         width=5
                                     )
                                 ]
-                            ),
+                            )],
+                        style={
+                            "border-right": "solid gray"
+                        },
+                        width=8,
+                        className='p-4'
+                    )
+                    ]),
+
+            dbc.Row(  # Primera fila
+                [
+
+
+                    dbc.Col(  # Primera fila
+                        [
+                                dcc.Graph(id='figure_2')
+                        ],
+                        width=4,
+                        className='p-4'
+                    ),
+
+
+                    dbc.Col(  # Primera fila
+                        [
                             dcc.Graph(id='figure_1')
                         ],
                         style={
@@ -339,7 +359,8 @@ Using a dashboard, visualize the most relevant aspects of the descriptive togeth
             html.Hr(
                 style={'border': 'solid gray'}
             ),
-            dbc.Row(  # segunda fila
+
+            dbc.Row(  # tercera fila
                 [
                     dbc.Col(  # Bloque abajo Izquierda
                         [
