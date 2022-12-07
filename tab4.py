@@ -99,10 +99,72 @@ def generate_places_graph():
 
 
 def build_tab_4():
-    return dbc.Container(
-        [
-            dcc.Graph(figure=generate_products_graph()),
-            dcc.Graph(figure=generate_places_graph())
+    return html.Div(
+        children=[
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dbc.Card(
+                                dbc.CardBody(
+                                    [
+                                        html.P(
+                                            [
+                                                'The top value customer segments (',
+                                                html.B('High potential'), ' and ', html.B(' Elite'),
+                                                ') spend a lot on ',
+                                                html.B('Wines'), ' and ',  html.B('Meat.')
+                                            ],
+                                        className='blockquote'
+                                        )
+                                    ]
+                                ),
+                                className='bg-primary text-white translate-middle start-50 top-50',
+                                style={'width': '60%'}
+                            )
+                        ],
+                        width=4
+                    ),
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_products_graph()),
+                        ],
+                        width=8,
+                    )
+                ]
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            dbc.Card(
+                                dbc.CardBody(
+                                    [
+                                        html.P(
+                                            [
+                                                'Increasing prices on the ',
+                                                html.B('Catalog'),
+                                                ' may be a good strategy to increase profits.'
+                                            ],
+                                            className='blockquote'
+                                        )
+                                    ]
+                                ),
+                                className='bg-primary text-white translate-middle start-50 top-50',
+                                style={'width': '60%'}
+                            )
+                        ],
+                        width=4
+                    ),
+                    dbc.Col(
+                        [
+                            dcc.Graph(figure=generate_places_graph())
+                        ],
+                        width=8,
+                    )
+                ],
+                className='mt-4'
+            )
         ],
         className='p-5'
     )
