@@ -24,7 +24,7 @@ def build_banner():
         id='banner',
         children=[
             html.H2(html.B('Customer Segmentation Dashboard')),
-            html.H4('Santana, Calvar & Company')
+            html.H4('Calvar, Santana & Company')
         ],
         className='p-4 bg-primary text-white'
     )
