@@ -73,7 +73,7 @@ def build_tab_1():
                                     dbc.Popover(
                                         [
                                             dbc.PopoverHeader("Info"),
-                                            dbc.PopoverBody("""With this data the company asks you to:
+                                            dbc.PopoverBody("""Tasks:
 -Perform a descriptive analysis of the 
 data looking for common patterns 
 among customers.
@@ -82,10 +82,11 @@ different types of customers by
 selecting the variables considered
 most appropriate for the study.
 -Using a dashboard, visualize the
-most relevant aspects of the descriptive
-together with the possibility of 
-grouping a new customer with one 
-of the previous clusters
+most relevant aspects of the 
+descriptive together with the 
+possibility of grouping a new 
+customer with one of the previous 
+clusters
 
 Data:
 -Year_Birth: Customer's birth year
