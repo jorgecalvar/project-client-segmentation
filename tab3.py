@@ -20,15 +20,23 @@ def get_df_for_cluster_for_plots():
     global df_clustered
     if df_clustered is None:
         df_clustered = pd.read_csv('df_clustered.csv')
+        df_clustered['cluster'] = df_clustered['cluster'].replace({v: k for k, v in CLUSTER_MAPPINGS.items()})
     return df_clustered
+
+def get_df_by_cluster_for_plots(cluster):
+    df = get_df_for_cluster_for_plots()
+    if cluster is not None:
+        return df[df['cluster'] == cluster]
+    else:
+        return df
 
 
 # GRAPHS ===========
 
 def generate_numpurchases_boxplot(cluster):
-    df = get_df_for_cluster_for_plots()
+    df = get_df_by_cluster_for_plots(cluster)
     fig = px.box(
-        df.loc[df['cluster'] == cluster, :],
+        df,
         y='NumAllPurchases',
         title='Number of purchases'
     )
@@ -37,9 +45,9 @@ def generate_numpurchases_boxplot(cluster):
 
 
 def generate_check_boxplot(cluster):
-    df = get_df_for_cluster_for_plots()
+    df = get_df_by_cluster_for_plots(cluster)
     fig = px.box(
-        df.loc[df['cluster'] == cluster, :],
+        df,
         y='AverageCheck',
         title='Average check'
     )
@@ -48,18 +56,18 @@ def generate_check_boxplot(cluster):
 
 
 def generate_relationship_pie(cluster):
-    df = get_df_for_cluster_for_plots()
+    df = get_df_by_cluster_for_plots(cluster)
     fig = px.pie(
-        df.loc[df['cluster'] == cluster, :],
+        df,
         'Relationship',
         title='Relationship status'
     )
     return fig
 
 def generate_education_pie(cluster):
-    df = get_df_for_cluster_for_plots()
+    df = get_df_by_cluster_for_plots(cluster)
     fig = px.pie(
-        df.loc[df['cluster'] == cluster, :],
+        df,
         'GradorPost',
         title='Education'
     )
@@ -67,9 +75,9 @@ def generate_education_pie(cluster):
 
 
 def generate_income_boxplot(cluster):
-    df = get_df_for_cluster_for_plots()
+    df = get_df_by_cluster_for_plots(cluster)
     fig = px.box(
-        df.loc[df['cluster'] == cluster, :],
+        df,
         y='Income',
         title='Income'
     )
@@ -78,9 +86,9 @@ def generate_income_boxplot(cluster):
 
 
 def generate_age_boxplot(cluster):
-    df = get_df_for_cluster_for_plots()
+    df = get_df_by_cluster_for_plots(cluster)
     fig = px.box(
-        df.loc[df['cluster'] == cluster, :],
+        df,
         y='Age',
         title='Age'
     )
@@ -206,7 +214,7 @@ def create_callbacks_for_tab3():
         Input('cluster-select', 'value')
     )
     def update_numpurchases_graph(cluster):
-        return generate_numpurchases_boxplot(CLUSTER_MAPPINGS[cluster])
+        return generate_numpurchases_boxplot(cluster)
 
 
     @app.callback(
@@ -214,7 +222,7 @@ def create_callbacks_for_tab3():
         Input('cluster-select', 'value')
     )
     def update_check_graph(cluster):
-        return generate_check_boxplot(CLUSTER_MAPPINGS[cluster])
+        return generate_check_boxplot(cluster)
 
 
     @app.callback(
@@ -222,28 +230,28 @@ def create_callbacks_for_tab3():
         Input('cluster-select', 'value')
     )
     def update_relationship_graph(cluster):
-        return generate_relationship_pie(CLUSTER_MAPPINGS[cluster])
+        return generate_relationship_pie(cluster)
 
     @app.callback(
         Output('education-graph', 'figure'),
         Input('cluster-select', 'value')
     )
     def update_education_graph(cluster):
-        return generate_education_pie(CLUSTER_MAPPINGS[cluster])
+        return generate_education_pie(cluster)
 
     @app.callback(
         Output('income-graph', 'figure'),
         Input('cluster-select', 'value')
     )
     def update_income_graph(cluster):
-        return generate_income_boxplot(CLUSTER_MAPPINGS[cluster])
+        return generate_income_boxplot(cluster)
 
     @app.callback(
         Output('age-graph', 'figure'),
         Input('cluster-select', 'value')
     )
     def update_age_graph(cluster):
-        return generate_age_boxplot(CLUSTER_MAPPINGS[cluster])
+        return generate_age_boxplot(cluster)
         
 
 

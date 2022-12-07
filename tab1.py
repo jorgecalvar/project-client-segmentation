@@ -57,7 +57,7 @@ def build_tab_1():
                 [
                     dbc.Col(
                         [
-                            dbc.Row(  # Primera fila
+                            dbc.Container(  # Primera fila
                                 [
                                 html.P("""
                                 Una empresa ha recopilado datos sobre sus clientes y las compras que han realizado últimamente, con el fin de crear productos personalizados o hacer campañas 
@@ -73,7 +73,7 @@ def build_tab_1():
 
                                 ]
                             ),
-                            dbc.Row(  # Primera fila
+                            dbc.Container(  # Primera fila
                                 [
                                     dbc.Button(
                                         "Info", id="popover-bottom-target", color="info"
