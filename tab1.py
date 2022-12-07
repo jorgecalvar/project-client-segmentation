@@ -74,17 +74,16 @@ def build_tab_1():
                                         [
                                             dbc.PopoverHeader("Info"),
                                             dbc.PopoverBody("""With this data the company asks you to:
-Perform a descriptive analysis of the 
-data looking for 
-common patterns among customers.
-Build a clustering model for the
- different types of customers by 
+-Perform a descriptive analysis of the 
+data looking for common patterns 
+among customers.
+-Build a clustering model for the
+different types of customers by 
 selecting the variables considered
- most appropriate for the study.
-Using a dashboard, visualize the
- most relevant aspects 
-of the descriptive together with 
-the possibility of 
+most appropriate for the study.
+-Using a dashboard, visualize the
+most relevant aspects of the descriptive
+together with the possibility of 
 grouping a new customer with one 
 of the previous clusters
 
@@ -116,9 +115,11 @@ in the X campaign
 the last campaign
 -NumWebPurchases: Purchases made 
 in the website
--NumCatalogPurchases: using a catalogue
+-NumCatalogPurchases: purchases 
+using a catalogue
 -NumStorePurchases: directly in stores
--NumWebVisitsMonth: Visits website last month
+-NumWebVisitsMonth: Visits to
+company'swebsite last month
 """, style={'white-space':'pre'}
                                                            ),
                                         ],
