@@ -286,7 +286,7 @@ def generate_cluster_cards():
                                 html.P(
                                     [
                                         html.H4(html.B('Low Recent')), html.Br(),
-                                        'The are recent customer who do not spend much, as they are young and do not have money.'
+                                        'They are recent customers who do not spend much, as they are young and do not have money.'
                                     ],
                                 )
                             ]
@@ -336,7 +336,7 @@ def build_tab_3():
                         dcc.Dropdown(
                             id='cluster-select',
                             options=list(CLUSTER_MAPPINGS.keys()),
-                            value='Elite',
+                            value=['Elite', 'High Potential'],
                             multi=True
                         )
                     ],
