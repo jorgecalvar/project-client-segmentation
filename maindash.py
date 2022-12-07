@@ -9,6 +9,7 @@ app = dash.Dash(
     external_stylesheets=[dbc.themes.YETI]
 )
 app.title = 'Client Segmentation Dashboard'
+server = app.server
 
 CLUSTER_MAPPINGS = {
     'Elite': 1,

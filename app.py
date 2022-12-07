@@ -10,7 +10,7 @@ import plotly.express as px
 
 import pandas as pd
 
-from maindash import app
+from maindash import app, server
 from tab1 import build_tab_1, create_callbacks_for_tab1
 from tab2 import build_tab_2
 from tab3 import build_tab_3, create_callbacks_for_tab3
@@ -99,6 +99,7 @@ def update_tabs(tab):
 create_callbacks_for_tab1()
 create_callbacks_for_tab3()
 create_callbacks_for_tab4()
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8737)
