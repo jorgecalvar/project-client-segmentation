@@ -2,7 +2,7 @@
 # Customer segmentation dashboard
 
 This is the final project of the course Application Development for Data Visualization.
-It is based on a dataset of customers It contains sociodemographic information (age, Education, Income, etc) , as
+It is based on a dataset of customers. It contains sociodemographic information (age, education, income, etc), as
 well as their consumption patterns (number of purchases, etc..).
 The dashboard consists of 4 tabs:
 
@@ -24,7 +24,7 @@ There are also two graphs where we can select the specific variables to depict.
 
 ### Tab 2: Clustering technique
 
-To cluster the customer, we have used KMeans, a simple clustering technique. We have only used a few 
+To cluster the customers, we have used KMeans, a simple clustering technique. We have only used a few 
 meaningful variables to compute the clusters. Using the Elbow method, we decided that we would create
 4 customer segments. 
 
