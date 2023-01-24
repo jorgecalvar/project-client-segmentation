@@ -1,55 +1,96 @@
-# Trabajo 12: Segmentación de clientes
 
-Una empresa ha recopilado datos sobre sus clientes y las compras que han realizado últimamente, con el fin de crear productos personalizados o hacer campañas de marketing dirigidas quieren buscar perfiles de clientes que se puedan parecer entre ellos. Con estos datos la empresa os pide:
+# Customer segmentation dashboard
 
-* Realizar un análisis descriptivo de los datos buscando patrones comunes entre clientes
-* Construir un modelo de clustering para los diferentes tipos de clientes seleccionando las variables que se consideren más adecuadas para el estudio
-* Mediante un cuadro de mando, visualizar los aspectos más relevantes del descriptivo junto con la posibilidad de agrupar un nuevo cliente con uno de los clusters anteriores.
+This is the final project of the course Application Development for Data Visualization.
+It is based on a dataset of customers It contains sociodemographic information (age, Education, Income, etc) , as
+well as their consumption patterns (number of purchases, etc..).
+The dashboard consists of 4 tabs:
 
-¿Qué tienen en común los clientes que se encuentran en el mismo clúster? 
+### Tab 1: Data exploration
 
-**Enlace a los datos:** https://www.kaggle.com/datasets/imakash3011/customer-personality-analysis
+In this tab, we can observe the distribution of the variables and correlations between them.
 
-Ver notebook https://datalore.jetbrains.com/notebook/PcoOuAJfMaX1ioSfxqgrLM/qZUQfJoPUjRbwWtMa7reoe
+We can filter each variable selecting a specific range.
+
+![Tab 1 Image 1](images/tab_1_1.jpg)
+
+![Tab 1 Image 2](images/tab_1_2.jpg)
+
+There are also two graphs where we can select the specific variables to depict.
+
+![Tab 1 Image 3](images/tab_1_3.jpg)
 
 
-Attributes
 
-People
+### Tab 2: Clustering technique
 
-* ID: Customer's unique identifier
-* Year_Birth: Customer's birth year
-* Education: Customer's education level
-* Marital_Status: Customer's marital status
-* Income: Customer's yearly household income
-* Kidhome: Number of children in customer's household
-* Teenhome: Number of teenagers in customer's household
-* Dt_Customer: Date of customer's enrollment with the company
-* Recency: Number of days since customer's last purchase
-* Complain: 1 if the customer complained in the last 2 years, 0 otherwise
+To cluster the customer, we have used KMeans, a simple clustering technique. We have only used a few 
+meaningful variables to compute the clusters. Using the Elbow method, we decided that we would create
+4 customer segments. 
 
-Products
+Additionally, we have plotted a 3d graph representing 3 important variables. The color shows the customer 
+segment. By changing the orientation of the graph, we observe that there are clear properties associated
+with each cluster.
 
-* MntWines: Amount spent on wine in last 2 years
-* MntFruits: Amount spent on fruits in last 2 years
-* MntMeatProducts: Amount spent on meat in last 2 years
-* MntFishProducts: Amount spent on fish in last 2 years
-* MntSweetProducts: Amount spent on sweets in last 2 years
-* MntGoldProds: Amount spent on gold in last 2 years
 
-Promotion
+![Tab 2](images/tab_2.jpg)
 
-* NumDealsPurchases: Number of purchases made with a discount
-* AcceptedCmp1: 1 if customer accepted the offer in the 1st campaign, 0 otherwise
-* AcceptedCmp2: 1 if customer accepted the offer in the 2nd campaign, 0 otherwise
-* AcceptedCmp3: 1 if customer accepted the offer in the 3rd campaign, 0 otherwise
-* AcceptedCmp4: 1 if customer accepted the offer in the 4th campaign, 0 otherwise
-* AcceptedCmp5: 1 if customer accepted the offer in the 5th campaign, 0 otherwise
-* Response: 1 if customer accepted the offer in the last campaign, 0 otherwise
 
-Place
 
-* NumWebPurchases: Number of purchases made through the company’s website
-* NumCatalogPurchases: Number of purchases made using a catalogue
-* NumStorePurchases: Number of purchases made directly in stores
-* NumWebVisitsMonth: Number of visits to company’s website in the last month*
+### Tab 3: Explore the created segments
+
+In this tab, we present the four clusters, giving them meaningful names: Elite, High potential, Low old
+and Low recent.
+
+We may filter the clusters we want to compare, and observe the distributions for different variables.
+The radar plot may give a general idea of which are the best ones and in which areas they excel.
+
+![Tab 3 Image 1](images/tab_3_1.jpg)
+
+![Tab 3 Image 2](images/tab_3_2.jpg)
+
+
+### Tab 4: Other insights
+
+Finally, in this tab, we observe some specific interesting insights about the clusters.
+
+In the following image, we can see the products that each cluster consumes and how much. 
+There is another graph showing the places where the customers buy, also by cluster.
+
+![Tab 4 Image 1](images/tab_4_1.jpg)
+
+We have also integrated a tool to predict the cluster to which a new customer belongs.
+We just have to enter the value and receive the result.
+
+![Tab 4 Image 2](images/tab_4_2.jpg)
+
+![Tab 4 Image 3](images/tab_4_3.jpg)
+
+
+<hr>
+
+## How to run?
+
+To execute the dashboard on your computer, run the following commands.
+
+1. Clone and get in the project directory
+
+````bash
+git clone https://github.com/jorgecalvar/project-client-segmentation.git
+cd project-client-segmentation
+````
+
+2. Create a virtualenv and install the requirements
+
+````bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+````
+
+3. Run the project
+
+````bash
+python app.py
+````
+
